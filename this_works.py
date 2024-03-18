@@ -107,9 +107,9 @@ class Assistant:
         self.greet()
         
         
-        # Will change this soon.
-        # The while loop is not the best way to keep the program running
-        # Just temporary solution while I test it.
+        # Will change soon
+        # just using it for right now
+        # 
         
         while(True):
             query = self.take_command().lower()
@@ -136,7 +136,7 @@ class Assistant:
 
             elif "significa" in query or "Significa" in query:
                 
-                # For some reason the indexes of the query are not cooperating
+                # For some reason I can't get the index I want
                 # I can't do the [trigger_word + 1] to get the target word
                 # It keeps giving me a list out of range error
 
@@ -161,10 +161,9 @@ class Assistant:
             
         if "youtube" in sitename:
                 
-            # Index of youtube is found in the string.
-            # This grabs the list item that comes after "youtube"
-            # Hopefully this is a good way to keep it working once we start
-            # taking more user input.
+            # search gets index of youtube is found in the string
+            # search_term grabs the items after "youtube"
+            # I think this is a good way to have it work long-term ???
             
             search = sitename.lower().split().index("youtube")
             search_term = sitename.split()[search + 1:]
@@ -190,8 +189,8 @@ class Assistant:
             
     def translate_to_portuguese(self, word):
         
-        # The code is working as it should I think but it keeps giving invalid word error
-        # I think the problem is with the PyDictionary library and its translation.
+        # I'm pretty sure the code is working as it should but I'm just getting an invalid word error
+        # a problem with the library? idk what i could be doing wrong
 
         dictionary = PyDictionary.PyDictionary()
         translation = dictionary.translate(word, 'pt-BR')
