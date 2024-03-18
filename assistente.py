@@ -41,6 +41,10 @@ dictionary = PyDictionary.PyDictionary()
     # pip install openai-whisper =
     # Para instalar as dependências do projeto
 
+# Para atualizar o projeto, execute os seguintes comandos no terminal:
+    # git fetch --all
+    # git reset --hard origin/master
+
 
 class Assistant:
 
