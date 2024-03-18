@@ -4,6 +4,7 @@ import webbrowser
 import datetime  
 import wikipedia
 import PyDictionary
+import setuptools
  
  
 dictionary = PyDictionary.PyDictionary()
@@ -30,7 +31,15 @@ dictionary = PyDictionary.PyDictionary()
 
 # Significa ainda não está funcionando.
 
-
+# Para instalar as dependências do projeto, execute os seguintes comandos no terminal:
+    # pip install -r requirements.txt 
+    # pip install --upgrade pyaudio
+    # pip install setuptools 
+    # pip install numpy 
+    # pip install soundfile 
+    # pip install torch 
+    # pip install openai-whisper =
+    # Para instalar as dependências do projeto
 
 
 class Assistant:
