@@ -120,54 +120,61 @@ class Assistant:
         self.greet()
         
         
-        # Will change this soon.
-        # The while loop is not the best way to keep the program running
-        # Just temporary solution while I test it.
+        start = input("Voce quer falar comigo? (sim/nao): ")
+        if start.lower() == "sim":
+            while True:
+                query = self.take_command().lower()
+                if "pesquisar" and "wikipedia" in query:
+                    self.search_fav_sites(query)
+                    continue
+                
+                elif "qual" and "dia" in query or "que" and "dia" in query:
+                    self.tellDay()
+                    continue
+                
+                elif "que" and "horas" in query or "qual" and "horas" in query:
+                    self.tellTime()
+                    continue
+                
+                elif "qual" and "seu" and "nome" in query:
+                    self.speak("Eu sou Jose Rizal. O seu assistente.")
+                    continue
+
+                elif "youtube" in query:
+                    self.search_fav_sites(query)
+                    continue
+
+                elif "significa" in query or "Significa" in query:
+                    
+                    # For some reason the indexes of the query are not cooperating
+                    # I can't do the [trigger_word + 1] to get the target word
+                    # It keeps giving me a list out of range error
+
+                    query_list = query.lower().split()
+                    print(f"Query list: {query_list}")
+                    trigger_word = query_list[0]
+                    print(f"Trigger word: {trigger_word}")
+                    word = query_list[1]
+                    self.translate_to_portuguese(word)
+                
+                elif "tchau" in query:
+                    
+                    self.speak("Tchau, tchau!")
+                    break
+
+                else:
+                    self.speak("Desculpe, não entendi o que você quis dizer")
+                    continue
         
-        while(True):
-            query = self.take_command().lower()
-            
-            if "Pesquisar" and "wikipedia" in query:
-                self.search_fav_sites(query)
-                continue
-            
-            elif "qual" and "dia" in query or "que" and "dia" in query:
-                self.tellDay()
-                continue
-            
-            elif "que" and "horas" in query or "qual" and "horas" in query:
-                self.tellTime()
-                continue
-            
-            elif "qual" and "seu" and "nome" in query:
-                self.speak("Eu sou Jose Rizal. O seu assistente.")
-                continue
-
-            elif "youtube" in query:
-                self.search_fav_sites(query)
-                continue
-
-            elif "significa" in query or "Significa" in query:
-                
-                # For some reason the indexes of the query are not cooperating
-                # I can't do the [trigger_word + 1] to get the target word
-                # It keeps giving me a list out of range error
-
-                query_list = query.lower().split()
-                print(f"Query list: {query_list}")
-                trigger_word = query_list[0]
-                print(f"Trigger word: {trigger_word}")
-                word = query_list[1]
-                self.translate_to_portuguese(word)
-            
-            elif "tchau" in query:
-                
-                self.speak("Tchau, tchau!")
-                break
-
-            else:
-                self.speak("Desculpe, não entendi o que você quis dizer")
-                continue
+        elif start.lower() == "nao": 
+            print("Que tristeza :(")
+            return
+        
+        else:
+            print("Por favor, responda com sim ou nao.")
+            return
+        
+       
                 
                 
     def search_fav_sites(self, sitename):
@@ -208,6 +215,7 @@ class Assistant:
 
         dictionary = PyDictionary.PyDictionary()
         translation = dictionary.translate(word, 'pt-BR')
+        print(translation.replace(".", ""))
         self.speak(f"{word} significa {translation}")
         
 
