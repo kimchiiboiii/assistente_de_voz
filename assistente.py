@@ -5,6 +5,7 @@ import datetime
 import wikipedia
 import PyDictionary
 import setuptools
+import string
  
  
 dictionary = PyDictionary.PyDictionary()
@@ -38,7 +39,7 @@ dictionary = PyDictionary.PyDictionary()
     # pip install numpy 
     # pip install soundfile 
     # pip install torch 
-    # pip install openai-whisper =
+    # pip install openai-whisper 
     # Para instalar as dependências do projeto
 
 # Para atualizar o projeto, execute os seguintes comandos no terminal:
@@ -88,8 +89,22 @@ class Assistant:
     
      
     def greet(self):
-        self.speak("Pois nao?")
+        
+        # only get the hour from tuple returned by tellTime() with [0]
+        hour = self.tellTime()[0]
+        
+        if hour > 6 and hour < 12:
+             self.speak("Bom dia! O pássaro madrugador pega a minhoca.")
+        elif hour >= 12 and hour < 18:
+            self.speak("Boa tarde! O dia está passando rápido.")
+        elif hour >= 18 and hour < 24:
+            self.speak("Boa noite! Talvez você durma cedo de uma vez.")
+        else:
+            self.speak("Estou cansado, chefe.")
     
+    
+    def getReady(self):
+        self.speak("Pois nao?")
 
 
     def tellDay(self):
@@ -113,7 +128,7 @@ class Assistant:
         print(str(current_time))
         hour = current_time.hour
         min = current_time.minute
-        self.speak(f"A hora é {hour} e {min} minutos.")   
+        return hour, min   
     
     
     def take_query(self):
@@ -122,6 +137,7 @@ class Assistant:
         
         start = input("Voce quer falar comigo? (sim/nao): ")
         if start.lower() == "sim":
+            self.getReady()
             while True:
                 query = self.take_command().lower()
                 if "pesquisar" and "wikipedia" in query:
@@ -133,7 +149,9 @@ class Assistant:
                     continue
                 
                 elif "que" and "horas" in query or "qual" and "horas" in query:
-                    self.tellTime()
+                    hour, min = self.tellTime()
+                    print((f"A hora é {hour} e {min} minutos."))
+                    self.speak(f"A hora é {hour} e {min} minutos.")   
                     continue
                 
                 elif "qual" and "seu" and "nome" in query:
@@ -146,10 +164,6 @@ class Assistant:
 
                 elif "significa" in query or "Significa" in query:
                     
-                    # For some reason the indexes of the query are not cooperating
-                    # I can't do the [trigger_word + 1] to get the target word
-                    # It keeps giving me a list out of range error
-
                     query_list = query.lower().split()
                     print(f"Query list: {query_list}")
                     trigger_word = query_list[0]
@@ -182,14 +196,20 @@ class Assistant:
         if "youtube" in sitename:
                 
             # Index of youtube is found in the string.
-            # This grabs the list item that comes after "youtube"
-            # Hopefully this is a good way to keep it working once we start
-            # taking more user input.
+            # Grab the list items that comes after "youtube"
+            # search_terms are then joined to the youtube search URL
             
-            search = sitename.lower().split().index("youtube")
-            search_term = sitename.split()[search + 1:]
-            self.speak(f"Pesquisando o Youtube para {"".join(search_term)}.")
-            webbrowser.open(f"http://www.youtube.com/results?search_query={'+'.join(search_term)}")
+            # OpenAI will sometimes put in punctuation in the string which was messing up
+            # the trigger_word variable. It wasn't finding "youtube" because it was "youtube," in the string.
+            # translate(str.maketrans('', '', string.punctuation)) removes punctuation from the string
+
+            sitename_no_punctuation = sitename.translate(str.maketrans('', '', string.punctuation))
+            sitename_list = sitename_no_punctuation.lower().split()
+
+            trigger_word = sitename_list.index("youtube")
+            search_terms = sitename_list[trigger_word + 1:]
+            self.speak(f"Pesquisando o Youtube para {"".join(search_terms)}.")
+            webbrowser.open(f"http://www.youtube.com/results?search_query={'+'.join(search_terms)}")
             return
 
         if "pesquisar" and "wikipedia" in sitename:
