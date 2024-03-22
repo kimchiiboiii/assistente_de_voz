@@ -94,16 +94,21 @@ class Assistant:
         hour = self.tellTime()[0]
         
         if hour > 6 and hour < 12:
-             self.speak("Bom dia! O pássaro madrugador pega a minhoca.")
+            print("Bom dia! O pássaro madrugador pega a minhoca.")
+            self.speak("Bom dia! O pássaro madrugador pega a minhoca.")
         elif hour >= 12 and hour < 18:
+            print("Boa tarde! O dia está passando rápido.")
             self.speak("Boa tarde! O dia está passando rápido.")
         elif hour >= 18 and hour < 24:
+            print("Boa noite! Talvez você durma cedo de uma vez.")
             self.speak("Boa noite! Talvez você durma cedo de uma vez.")
         else:
+            print("Estou cansado, chefe.")
             self.speak("Estou cansado, chefe.")
     
     
     def getReady(self):
+        print("Pois nao?")
         self.speak("Pois nao?")
 
 
