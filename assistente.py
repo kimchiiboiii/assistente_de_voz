@@ -6,7 +6,7 @@ import wikipedia
 import PyDictionary
 import setuptools
 import string
- 
+from weather import Weather
  
 dictionary = PyDictionary.PyDictionary()
 
@@ -176,6 +176,16 @@ class Assistant:
                     word = query_list[1]
                     self.translate_to_portuguese(word)
                 
+                elif "clima" in query or "Clima" in query:
+                    query_no_punctuation = query.translate(str.maketrans('', '', string.punctuation))
+                    query_list = query_no_punctuation.lower().split()
+                    trigger_word = query_list.index("clima")
+                    city_name = query_list[trigger_word + 1]
+                    print(city_name)
+                    weather_instance = Weather()
+                    weather_instance.get_weather(city_name)
+                    # not finished
+
                 elif "tchau" in query:
                     
                     self.speak("Tchau, tchau!")
@@ -243,10 +253,11 @@ class Assistant:
         print(translation.replace(".", ""))
         self.speak(f"{word} significa {translation}")
         
-
+    
 
 
 if __name__ == '__main__':
     
     assistant = Assistant()
     assistant.take_query()
+    
