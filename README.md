@@ -36,4 +36,5 @@ Small project just for learning/Projeto pequeno de aprendizado.
   </p>
 
  - **Traduzir para português** =
-  <p> "Significa (sua_palavra)
+    <p> "Significa (sua_palavra)"
+    </p>
