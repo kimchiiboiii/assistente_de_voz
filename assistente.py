@@ -30,17 +30,11 @@ dictionary = PyDictionary.PyDictionary()
 # Saia do programa = "Tchau"
 # A programa vai continuar rodando até que você diga "Tchau".
 
-# Significa ainda não está funcionando.
+# Traduzir para português = "Significa (sua_palavra)"
 
 # Para instalar as dependências do projeto, execute os seguintes comandos no terminal:
     # pip install -r requirements.txt 
-    # pip install --upgrade pyaudio
-    # pip install setuptools 
-    # pip install numpy 
-    # pip install soundfile 
-    # pip install torch 
-    # pip install openai-whisper 
-    # Para instalar as dependências do projeto
+    
 
 # Para atualizar o projeto, execute os seguintes comandos no terminal:
     # git fetch --all
@@ -176,15 +170,20 @@ class Assistant:
                     word = query_list[1]
                     self.translate_to_portuguese(word)
                 
+                
+                
                 elif "clima" in query or "Clima" in query:
+                    
+                    # clean up the string and send the keywords to the weather class
+                    # translate(str.maketrans) makes translation table that translates punctuation to None
                     query_no_punctuation = query.translate(str.maketrans('', '', string.punctuation))
                     query_list = query_no_punctuation.lower().split()
                     trigger_word = query_list.index("clima")
-                    city_name = query_list[trigger_word + 1]
+                    city_name = query_list[trigger_word + 1:]
                     print(city_name)
                     weather_instance = Weather()
                     weather_instance.get_weather(city_name)
-                    # not finished
+                    
 
                 elif "tchau" in query:
                     
@@ -245,8 +244,6 @@ class Assistant:
             
     def translate_to_portuguese(self, word):
         
-        # The code is working as it should I think but it keeps giving invalid word error
-        # I think the problem is with the PyDictionary library and its translation.
 
         dictionary = PyDictionary.PyDictionary()
         translation = dictionary.translate(word, 'pt-BR')

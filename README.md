@@ -35,4 +35,5 @@ Small project just for learning/Projeto pequeno de aprendizado.
   A programa vai continuar rodando até que você diga "Tchau".
   </p>
 
- - **Significa ainda não está funcionando.**
+ - **Traduzir para português** =
+  <p> "Significa (sua_palavra)
